@@ -1,8 +1,8 @@
 package binarytree;
 
-import java.util.List;
-import java.util.ArrayList;
 import basicdatastructure.TreeNode;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BinaryTree {
     public static void main(String[] args) {
@@ -11,24 +11,21 @@ public class BinaryTree {
         TreeNode node3 = new TreeNode(3);
         node1.left = node2;
         node1.right = node3;
-        System.out.println("前序遍历: " + preorderTraversal(node1));
+        System.out.println("前序遍历: " + preorderTraverse(node1));
         System.out.println("中序遍历: " + inorderTraversal(node1));
         System.out.println("后序遍历: " + postorderTraversal(node1));
     }
 
-    public static List<Integer> preorderTraversal(TreeNode root) {
-        List<Integer> result = new ArrayList<>();
-        preorder(root, result);
-        return result;
-    }
-
-    private static void preorder(TreeNode root, List<Integer> result) {
-        if (root == null) return;
-
-        result.add(root.val);
-
-        preorder(root.left, result);
-        preorder(root.right, result);
+    // 使用“分解问题”的思路来计算前序遍历的结果
+    public static List<Integer> preorderTraverse(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        if (root == null) {
+            return res;
+        }
+        res.add(root.val);
+        res.addAll(preorderTraverse(root.left));
+        res.addAll(preorderTraverse(root.right));
+        return res;
     }
 
     public static List<Integer> inorderTraversal(TreeNode root) {
