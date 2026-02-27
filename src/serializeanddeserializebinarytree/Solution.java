@@ -75,7 +75,7 @@ public class Solution {
         return root;
     }
 
-    // tool method(using postorder iteration), construct binary tree from List
+    // tool method(using postorder traversal), construct binary tree from List
     private TreeNode deserialize1(LinkedList<String> nodes) {
         if (nodes.isEmpty()) {
             return null;
