@@ -1,6 +1,8 @@
 // LeetCode 912. Sort an Array
 package sortanarray;
 
+import java.util.Arrays;
+
 class Solution {
     private static int[] temp;
 
@@ -54,7 +56,7 @@ class Solution {
         System.out.println("LeetCode 912. Sort an Array");
         System.out.println("Using merge sort");
         int[] nums = {64, 34, 25, 12, 22, 11, 90};
-        System.out.println("Original nums: " + java.util.Arrays.toString(nums));
-        System.out.println("After sorted: " + java.util.Arrays.toString(sortArray(nums)));
+        System.out.println("Original nums: " + Arrays.toString(nums));
+        System.out.println("After sorted: " + Arrays.toString(sortArray(nums)));
     }
 }
