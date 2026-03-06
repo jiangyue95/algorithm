@@ -1,4 +1,4 @@
-// LeetCode 215. Kth Largest Element in a Array
+// LeetCode 215. Kth Largest Element in an Array
 // using bianry heap
 // using quick select
 package kthlargestelementinaarray;
