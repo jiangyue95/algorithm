@@ -1,36 +1,46 @@
+// LeetCode 46. Permutations
 package permutations;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Solution {
-    static List<List<Integer>> res = new ArrayList<>();
+    private List<List<Integer>> res = new LinkedList<>();
+    // store the recursive track of backtracking algorithm
+    private LinkedList<Integer> track = new LinkedList<>();
+    // the elements in track mark as true
+    private boolean[] used;
 
-    public static void main(String[] args) {
-        int[] nums = {1, 2, 3};
-        System.out.println("Permutations: " + permute(nums));
-        
-    }
-
-    public static List<List<Integer>> permute(int[] nums) {
-        LinkedList<Integer> track = new LinkedList<>();
-        backtrack(nums, track);
+    // main method
+    public List<List<Integer>> permute(int[] nums) {
+        used = new boolean[nums.length];
+        backtrack(nums);
         return res;
     }
     
-    public static void backtrack(int[] nums, LinkedList<Integer> track) {
+    // core method of backtracking algorithm
+    private void backtrack(int[] nums) {
+        // base case
         if (track.size() == nums.length) {
+            // collect the value on the leaf
             res.add(new LinkedList(track));
             return;
         }
 
+        // standard backtracking algorithm template
         for (int i = 0; i < nums.length; i++) {
-            if (track.contains(nums[i])) {
+            // the elements in track can not be selected
+            if (used[i]) {
                 continue;
             }
-
+            // select
+            used[i] = true;
             track.add(nums[i]);
-            backtrack(nums, track);
+            // excute next level backtracking
+            backtrack(nums);
+            // cancel selection
             track.removeLast();
+            used[i] = false;
         }
     }
 }
