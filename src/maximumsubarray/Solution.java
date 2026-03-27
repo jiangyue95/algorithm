@@ -3,7 +3,7 @@
 package maximumsubarray;
 
 public class Solution {
-    public int maxSubarray(int[] nums) {
+    public int maxSubArray(int[] nums) {
         int left = 0;
         int right = 0;
         int windowSum = 0;

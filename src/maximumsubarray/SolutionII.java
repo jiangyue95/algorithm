@@ -3,7 +3,7 @@
 package maximumsubarray;
 
 public class SolutionII {
-    public int maxSubarray(int[] nums) {
+    public int maxSubArray(int[] nums) {
         int n = nums.length;
 
         if (n == 0) {
