@@ -1,0 +1,7 @@
+/.idea
+/.vscode
+*.class
+
+algorithm.iml
+qodana.yaml
+*.java~
