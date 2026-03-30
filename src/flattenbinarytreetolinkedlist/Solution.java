@@ -1,34 +1,57 @@
 // LeetCode 114. Flatten Binary Tree to Linked List
+// use the thought of break down problem
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
 package flattenbinarytreetolinkedlist;
 
 import basicdatastructure.TreeNode;
 
 public class Solution {
-	// 定义：将以 root 为根的树拉平成链表
+	// definition: transfer the binary tree with the root is the root node
+	// into a linked list
+	// and its order is pre-order travers
     public void flatten(TreeNode root) {
-        // base case
+        // base case: the binary tree is null
 		if (root == null) {
 			return;
 		}
 
-		// 利用定义，把左右子树拉平
+		// base on the definition of method flatten
+		// flatten the left and right subtree
 		flatten(root.left);
 		flatten(root.right);
 
-		// 后序遍历位置
-		// 1. 左右子树已经被拉平成一条链表
+		// post-order position
+		// store the new linke list 
+		// flatten base on the original left and tigth subtree
 		TreeNode left = root.left;
 		TreeNode right = root.right;
 
-		// 2. 将左子树作为右子树
+		// transfer the left subtree in the root.right
 		root.left = null;
 		root.right = left;
 
-		// 3. 将原先的右子树接到当前右子树的末端
+		// add original right subtree to the end of current right subtree
 		TreeNode p = root;
-		while(p.right != null) {
+		// find the end of curent root.right
+		while (p.right != null) {
 			p = p.right;
 		}
+		
 		p.right = right;
     }
 }
