@@ -1,4 +1,4 @@
-// LeetCode 96.Reverse Linked List II
+// LeetCode 92.Reverse Linked List II
 // using the thought of recurse
 
 /**
