@@ -1,4 +1,5 @@
 // LeetCode 116. Populating Next Right Pointers in Each Node
+// Tag: Binary Tree, Perfect Binary Tree
 package populatingnextrightpointersineachnode;
 
 class Node {
@@ -24,23 +25,30 @@ class Node {
 public class Solution {
 
     public Node connect(Node root) {
+        // base case
         if (root == null) {
             return null;
         }
+
         traverse(root.left, root.right);
         return root;
     }
 
     private void traverse(Node node1, Node node2) {
+        // base case
         if (node1 == null || node2 == null) {
             return;
         }
 
         node1.next = node2;
 
+        // left subtree
         traverse(node1.left, node1.right);
+
+        // right subtree
         traverse(node2.left, node2.right);
 
+        // left subtree and right subtree
         traverse(node1.right, node2.left);
     }
 }
