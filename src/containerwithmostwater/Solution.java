@@ -1,4 +1,5 @@
 // LeetCode 11. Container With Most Water
+// Using two pointers
 package containerwithmostwater;
 
 public class Solution {
@@ -10,7 +11,11 @@ public class Solution {
         while (left < right) {
             // the area of rectangle between [left, right]
             int cur_area = Math.min(height[left], height[right]) * (right - left);
+
+            // fing the max area
             res = Math.max(res, cur_area);
+            
+            // the key varibale of this problem is the lower side
             // two pointers, move the lower side
             if (height[left] < height[right]) {
                 left++;
