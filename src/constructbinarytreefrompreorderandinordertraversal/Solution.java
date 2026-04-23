@@ -1,27 +1,43 @@
 // LeetCode 105. Construct Binary Tree from Preorder and Inorder Traversal
+// Tags: Binary Tree
 package constructbinarytreefrompreorderandinordertraversal;
 
 import basicdatastructure.TreeNode;
 import java.util.HashMap;
 
 public class Solution {
-    // 存储 inorder 中值到索引的映射
+
+    // Record the mapping of value to index in inorder
+    // This HashMap is used to avoid loop search
     HashMap<Integer, Integer> valToIndex = new HashMap<>();
-    // 主函数
+
+    /**
+     * Main method call the build method to construct the binary tree
+     * @param preorder preorder traversal array
+     * @param inorder inorder traversal array
+     * @return the root node of the binary tree
+     */
     public TreeNode buildTree(int[] preorder, int[] inorder) {
-        // 初始化 inorder HashMap
+        // initialize the inorder HashMap
         for (int i = 0; i < inorder.length; i++) {
             valToIndex.put(inorder[i], i);
         }
-        // 根据函数定义，用 preorder 和 inorder 构造二叉树
-        return build(preorder, 0, preorder.length - 1, inorder, 0, preorder.length - 1);
+        // Based on the definition， use preorder and inorder sequencees construct binary tree
+        return build(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1);
     }
 
     /**
-     * build 函数的定义
-     * 假设前序遍历数组为 preorder[preStart..preEnd]
-     * 中序遍历数组为 inorder[inStart..inEnd]
-     * 构造二叉树，返回该二叉树的根节点
+     * The definition of build
+     * Assume that the preorder traversal array is preorder[preStart..preEnd],
+     * the inorder traversal array is inorder[inStart..inEnd]
+     * construct the binary tree, return the root node of this binary tree
+     * @param preorder preorder traversal array
+     * @param preStart the begin index of preorder traversal array
+     * @param preEnd the end index of preorder traversal array
+     * @param inorder inorder traversal array
+     * @param inStart the begin index of inorder traversal array
+     * @param inEnd the end index of inorder traversal array
+     * @return the root node of this binary tree
      */
     private TreeNode build(int[] preorder, int preStart, int preEnd, int[] inorder, int inStart,
             int inEnd) {
@@ -29,28 +45,21 @@ public class Solution {
         if (preStart > preEnd) {
             return null;
         }
-        // root 节点对应的就是前序遍历数组中的第一个元素
+        // The root node should be the first element of the preorder traversal array
         int rootVal = preorder[preStart];
-        // rootVal 是中序遍历数组中的索引
-        // 通过 for 循环便利的方式去确定 index 的效率不高，可以进一步优化
-        // int index = 0;
-        // for (int i = inStart; i < inEnd; i++) {
-        //     if (inorder[i] == rootVal) {
-        //         index = i;
-        //         break;
-        //     }
-        // }
 
-        // 避免 for 循环寻找 rootVal
+        // Avoid for loop to search rootVal
         int index = valToIndex.get(rootVal);
 
-        // 确定左子树的长度
+        // Determine the length of the left subtree
         int leftSize = index - inStart;
 
-        // 创建根节点
+        // Create the root node
         TreeNode root = new TreeNode(rootVal);
 
-        // 递归构造左右子树，中序遍历数组的边界好写，重点是前序遍历数组的边界
+        // Recursively construct the left subtree and the right subtree
+        // It is easy to determine the boundary of inorder traversal array
+        // The key point is to determine the boundary of preorder traversal array
         root.left = build(preorder, preStart + 1, preStart + leftSize, inorder, inStart, index - 1);
         root.right = build(preorder, preStart + leftSize + 1, preEnd, inorder, index + 1, inEnd);
         
