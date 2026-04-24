@@ -1,34 +1,46 @@
 // LeetCode 106. Construct Binary Tree from Inorder and Postorder Traversal
+// Tags: Binary Tree
 package constructbinarytreefrominorderandpostordertraversal;
 
 import basicdatastructure.TreeNode;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Solution {
-    // 储存 inorder 中值到索引的映射（map）
-    HashMap<Integer, Integer> valToIndex = new HashMap<>();
+    // Store the mapping from value to index in inorder traversal array
+    Map<Integer, Integer> valToIndex = new HashMap<>();
 
-    // 主函数
+    /**
+     * main method call the build method to construct the binary tree
+     * @param inorder inorder traversal array
+     * @param postorder postorder traversal array
+     * @return the root node of the binary tree constructed by the build method
+     */
     public TreeNode buildTree(int[] inorder, int[] postorder) {
+        
+        // put the value into the hashmap
         for (int i = 0; i < inorder.length; i++) {
             valToIndex.put(inorder[i], i);
         }
 
+        // call the build method
         return build(inorder, 0, inorder.length - 1, postorder, 0, postorder.length - 1);
     }
     
     /**
-     * build 函数的定义
-     * 后序遍历数组为 postorder[postStart..postEnd]，
-     * 中序遍历数组为 inorder[inStart..inEnd]，
-     * 构造二叉树，返回该二叉树的根节点
-     * @param inorder中序遍历数组
-     * @param inStart中序遍历数组起始索引
-     * @param inEnd中序遍历数组结束索引
-     * @param postorder后序遍历数组
-     * @param postStart后序遍历数组起始索引
-     * @param postEnd后序遍历数组结束索引
-     * @return返回二叉树的根节点
+     * Construct the binary tree 
+     * definied by the inorder traversal array and the postorder traversal array
+     * Return the root node of the binary tree
+     * two key definition: inorder[inStart..inEnd], postorder[postStart..postEnd]
+     * Assume that the inorder traversal array inorder begain with inStart and end with inEnd
+     * and the postorder traversal array postorder begin with postStart and end with postEnd
+     * @param inorder inorder traversal array
+     * @param inStart the begin index of the inorder traversal array
+     * @param inEnd the end index of the inorder traversal array
+     * @param postorder postorder traversal array
+     * @param postStart the begin index of the postorder traversal array
+     * @param postEnd the end index of the postorder traversal array
+     * @return the root node the constructed binary tree
      */
     private TreeNode build(int[] inorder, int inStart, int inEnd, int[] postorder, int postStart,
             int postEnd) {
@@ -37,23 +49,22 @@ public class Solution {
             return null;
         }
 
-        // root 节点对应的值就是后序遍历数组的最后一个元素
+        // the value the root node is the last element of postorder traversal array
         int rootVal = postorder[postEnd];
 
-        // rootVal 在中序遍历数组中的索引
+        // find the index in the inorder traversal array
         int index = valToIndex.get(rootVal);
 
-        // 左子树个数
+        // calculate the count of the left subtree
         int leftSize = index - inStart;
 
-        // 构造根节点
+        // Construct the root node
         TreeNode root = new TreeNode(rootVal);
 
-        // 递归构造左右子树
+        // Recursively construct the left subtree and right sub tree
         root.left = build(inorder, inStart, index - 1, postorder, postStart, postStart + leftSize - 1);
         root.right = build(inorder, index + 1, inEnd, postorder, postStart + leftSize, postEnd - 1);
 
         return root;
-
     }
 }
