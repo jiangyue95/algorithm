@@ -1,13 +1,21 @@
 // LeetCode 889. Construct Binary Tree from Preorder and Postorder Traversal
+// Tags: Binary Tree
 package constructbinarytreefrompreorderandpostordertraversal;
 
 import basicdatastructure.TreeNode;
 import java.util.HashMap;
 
 public class Solution {
-    // 存储 postorder 中值到索引的映射（map）
+
+    // Store the mapping from vlaue to index in postorder traversal array
     HashMap<Integer, Integer> valToIndex = new HashMap<>();
 
+    /**
+     * Main method calls the build method construct the binary tree
+     * @param preorder preorder traversal array
+     * @param postorder postorder traversal array
+     * @return the root node of the binary tree
+     */
     public TreeNode constructFromPrePost(int[] preorder, int[] postorder) {
         for (int i = 0; i < postorder.length; i++) {
             valToIndex.put(postorder[i], i);
@@ -16,15 +24,15 @@ public class Solution {
     }
 
     /**
-     * 定义： 根据 preorder[preStart..preEnd] 和 postorder[postStart, postEnd]
-     * 构建二叉树，并返回根节点
-     * @param preorder
-     * @param preStart
-     * @param preEnd
-     * @param postorder
-     * @param postStart
-     * @param postEnd
-     * @return
+     * Based on preorder[preStart..preEnd] and postorder[postStart, postEnd]
+     * Construct binary and return the root node
+     * @param preorder the preorder traversal array
+     * @param preStart the start index of the preorder traversal array
+     * @param preEnd the end index of the preorder traversal array
+     * @param postorder the postorder traversal array
+     * @param postStart the start index of the postorder traversal array
+     * @param postEnd the end index of the postorder traversal array
+     * @return the root node of the binary tree
      */
     private TreeNode build(int[] preorder, int preStart, int preEnd, int[] postorder, int postStart,
             int postEnd) {
@@ -36,22 +44,26 @@ public class Solution {
             return new TreeNode(preorder[preStart]);
         }
 
-        // root 节点对应的值就是前序遍历数组的第一个元素
+        // the value of the root node is the first element of the preorder traversal array
         int rootVal = preorder[preStart];
+
+        // Create the root node
         TreeNode root = new TreeNode(rootVal);
 
-        // root.left 的值前序遍历的第二个元素
-        // 通过前序和后序遍历构造二叉树的关键在于通过左子树的根节点
-        // 确定 preorder 和 postorder 中左右子树的元素区间
+        // The value of node root.left is the second element of the preorder traversal array
+        // The key of constructing binary tree by preorder traversal array and postorder traversal
+        // array is determing the interval of left and right subtree by the preorder traversal and
+        // the postorder interval.
         int leftRootVal = preorder[preStart + 1];
-        // leftRootVal 在后序遍历数组中的索引
+        
+        // The index of the root.left's value in postorder traversal array
         int index = valToIndex.get(leftRootVal);
         if (index == postEnd - 1) {
-            // 无左子树，只有右子树
+            // There is no left subtree, only the right subtree
             root.right = build(preorder, preStart + 1, preEnd, postorder, postStart, postEnd - 1);
         } else {
             int leftSize = index - postStart + 1;
-            // 递归构造左右子树
+            // Recursively call build method to construct the left and right subree
             root.left =
                     build(preorder, preStart + 1, preStart + leftSize, postorder, postStart, index);
             root.right = build(preorder, preStart + leftSize + 1, preEnd, postorder, index + 1,
