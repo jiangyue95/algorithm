@@ -31,6 +31,7 @@ public class Solution {
             window.put(c, window.getOrDefault(c, 0) + 1);
 
             // Check if the left boundary need to be shrinked
+            // When the duplicate characters occur, shrink the left boundary
             while (window.get(c) > 1) {
                 char d = s.charAt(left);
                 // Left boundary moves to right
