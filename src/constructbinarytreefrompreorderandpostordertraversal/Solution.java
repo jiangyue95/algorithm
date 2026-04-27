@@ -58,11 +58,15 @@ public class Solution {
         
         // The index of the root.left's value in postorder traversal array
         int index = valToIndex.get(leftRootVal);
+
+        // Construct the left and right subtrees
         if (index == postEnd - 1) {
             // There is no left subtree, only the right subtree
             root.right = build(preorder, preStart + 1, preEnd, postorder, postStart, postEnd - 1);
         } else {
+            // Calculate the size of left subtree
             int leftSize = index - postStart + 1;
+            
             // Recursively call build method to construct the left and right subree
             root.left =
                     build(preorder, preStart + 1, preStart + leftSize, postorder, postStart, index);
