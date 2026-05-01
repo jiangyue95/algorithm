@@ -1,13 +1,12 @@
 // LeetCode 297. Serialize and Deserialize Binary Tree
 // Tags: Binary Tree
-// Use preorder traversal
+// Use postorder traversal
 package serializeanddeserializebinarytree;
 
 import basicdatastructure.TreeNode;
 import java.util.LinkedList;
 
-public class Solution {
-
+public class SolutionII {
     // separator
     String SEP = ",";
     // null node sign
@@ -20,32 +19,16 @@ public class Solution {
         return sb.toString();
     }
 
-    // tool method, save binary tree into StringBuilder
-    private void serialize(TreeNode root, StringBuilder sb) {
-        // base case
-        if (root == null) {
-            sb.append(NULL).append(SEP); // "#" 表示空节点
-            return;
-        }
-
-        // preorder traversal position
-        // 前序遍历位置
-        sb.append(root.val).append(SEP); // 先根节点
-
-        serialize(root.left, sb); // 再左子树
-        serialize(root.right, sb); // 最后右子树
-    }
-
     // toole method(using postorder), save binary tree into StringBuilder
-    private void serialize1(TreeNode root, StringBuilder sb) {
+    private void serialize(TreeNode root, StringBuilder sb) {
         // base case
         if (root == null) {
             sb.append(NULL).append(SEP);
             return;
         }
 
-        serialize1(root.left, sb);
-        serialize1(root.right, sb);
+        serialize(root.left, sb);
+        serialize(root.right, sb);
         
         // postorder position
         sb.append(root.val).append(SEP);
@@ -61,30 +44,8 @@ public class Solution {
         return deserialize(nodes);
     }
 
-    // tool method, construct binary tree from List
-    private TreeNode deserialize(LinkedList<String> nodes) {
-        if (nodes.isEmpty()) {
-            return null;
-        }
-
-        // preorder position
-        // The root node is the leftest of the nodes
-        String first = nodes.removeFirst();
-        if (first.equals(NULL)) {
-            return null;
-        }
-
-
-        TreeNode root = new TreeNode(Integer.parseInt(first));
-
-        root.left = deserialize(nodes);
-        root.right = deserialize(nodes);
-
-        return root;
-    }
-
     // tool method(using postorder traversal), construct binary tree from List
-    private TreeNode deserialize1(LinkedList<String> nodes) {
+    private TreeNode deserialize(LinkedList<String> nodes) {
         if (nodes.isEmpty()) {
             return null;
         }

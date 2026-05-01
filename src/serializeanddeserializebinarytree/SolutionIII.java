@@ -1,11 +1,12 @@
 // LeetCode 297. Serialize and Deserialize Binary Tree
+// Tags: Binary Tree
 package serializeanddeserializebinarytree;
 
 import basicdatastructure.TreeNode;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class Solution1 {
+public class SolutionIII {
     String SEP = ",";
     String NULL = "#";
 
