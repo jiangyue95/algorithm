@@ -36,21 +36,6 @@ public class Solution {
         serialize(root.right, sb); // 最后右子树
     }
 
-    // toole method(using postorder), save binary tree into StringBuilder
-    private void serialize1(TreeNode root, StringBuilder sb) {
-        // base case
-        if (root == null) {
-            sb.append(NULL).append(SEP);
-            return;
-        }
-
-        serialize1(root.left, sb);
-        serialize1(root.right, sb);
-        
-        // postorder position
-        sb.append(root.val).append(SEP);
-    }
-
     // Decodes your encoded data to tree.
     public TreeNode deserialize(String data) {
         // transfer String into List
@@ -79,27 +64,6 @@ public class Solution {
 
         root.left = deserialize(nodes);
         root.right = deserialize(nodes);
-
-        return root;
-    }
-
-    // tool method(using postorder traversal), construct binary tree from List
-    private TreeNode deserialize1(LinkedList<String> nodes) {
-        if (nodes.isEmpty()) {
-            return null;
-        }
-
-        // The root node is the last element of the nodes
-        String last = nodes.removeLast();
-        if (last.equals(NULL)) {
-            return null;
-        }
-
-        TreeNode root = new TreeNode(Integer.parseInt(last));
-
-        // deserialize right first.
-        root.right = deserialize(nodes);
-        root.left = deserialize(nodes);
 
         return root;
     }
