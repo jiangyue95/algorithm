@@ -1,7 +1,12 @@
-// LeetCode 654. Maximum Binary Tree
-package maximumbinarytree;
+package topic01_binary_tree_and_bst.leetcode654_maximum_binary_tree;
 
 import basicdatastructure.TreeNode;
+
+/**
+ * LeetCode 654. Maximum Binary Tree
+ * 
+ * Tags: Binary Tree, Construction & Serialization
+ */
 
 public class Solution {
     public TreeNode constructMaximumBinaryTree(int[] nums) {
@@ -14,7 +19,7 @@ public class Solution {
             return null;
         }
 
-        // 找到数组中的最大值和对应的索引
+        // find the biggest value and its index
         int index = -1;
         int maxVal = Integer.MIN_VALUE;
         for (int i = lo; i <= hi; i++) {
@@ -24,10 +29,10 @@ public class Solution {
             }
         }
 
-        // 先构造出根节点
+        // create root node
         TreeNode root = new TreeNode(maxVal);
 
-        // 递归调用构造左右子树
+        // call build recursively to build left and right subtree
         root.left = build(nums, lo, index - 1);
         root.right = build(nums, index + 1, hi);
 
