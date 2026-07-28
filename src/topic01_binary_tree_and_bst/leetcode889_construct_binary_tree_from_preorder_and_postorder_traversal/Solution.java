@@ -1,31 +1,40 @@
-// LeetCode 889. Construct Binary Tree from Preorder and Postorder Traversal
-// Tags: Binary Tree
-package constructbinarytreefrompreorderandpostordertraversal;
+package src.topic01_binary_tree_and_bst.leetcode889_construct_binary_tree_from_preorder_and_postorder_traversal;
 
 import basicdatastructure.TreeNode;
-import java.util.HashMap;
 
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * Leet 889. Construct Binary Tree from Preorder and Postorder Traversal
+ *
+ * Tags: Binary Tree, Construction & Serialization
+ */
 public class Solution {
 
     // Store the mapping from vlaue to index in postorder traversal array
-    HashMap<Integer, Integer> valToIndex = new HashMap<>();
+    private Map<Integer, Integer> valToIndex = new HashMap<>();
 
     /**
-     * Main method calls the build method construct the binary tree
+     * Main method calls the build method construct the binary tree.
+     *
      * @param preorder preorder traversal array
      * @param postorder postorder traversal array
      * @return the root node of the binary tree
      */
     public TreeNode constructFromPrePost(int[] preorder, int[] postorder) {
+        // create the hashmap of postorder array to decrease time complexity
         for (int i = 0; i < postorder.length; i++) {
             valToIndex.put(postorder[i], i);
         }
+        // call tool method
         return build(preorder, 0, preorder.length - 1, postorder, 0, postorder.length - 1);
     }
 
     /**
      * Based on preorder[preStart..preEnd] and postorder[postStart, postEnd]
-     * Construct binary and return the root node
+     * Construct binary and return the root node.
+     *
      * @param preorder the preorder traversal array
      * @param preStart the start index of the preorder traversal array
      * @param preEnd the end index of the preorder traversal array
@@ -35,11 +44,13 @@ public class Solution {
      * @return the root node of the binary tree
      */
     private TreeNode build(int[] preorder, int preStart, int preEnd, int[] postorder, int postStart,
-            int postEnd) {
+                           int postEnd) {
         // base case
         if (preStart > preEnd) {
             return null;
         }
+
+        // no child node
         if (preStart == preEnd) {
             return new TreeNode(preorder[preStart]);
         }
@@ -52,10 +63,10 @@ public class Solution {
 
         // The value of node root.left is the second element of the preorder traversal array
         // The key of constructing binary tree by preorder traversal array and postorder traversal
-        // array is determing the interval of left and right subtree by the preorder traversal and
+        // array is determine the interval of left and right subtree by the preorder traversal and
         // the postorder interval.
         int leftRootVal = preorder[preStart + 1];
-        
+
         // The index of the root.left's value in postorder traversal array
         int index = valToIndex.get(leftRootVal);
 
@@ -66,14 +77,14 @@ public class Solution {
         } else {
             // Calculate the size of left subtree
             int leftSize = index - postStart + 1;
-            
+
             // Recursively call build method to construct the left and right subree
             root.left =
                     build(preorder, preStart + 1, preStart + leftSize, postorder, postStart, index);
             root.right = build(preorder, preStart + leftSize + 1, preEnd, postorder, index + 1,
                     postEnd - 1);
-
         }
+
         return root;
     }
 }

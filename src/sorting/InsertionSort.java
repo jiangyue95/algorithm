@@ -1,3 +1,4 @@
+package sorting;
 public class InsertionSort {
 
     // 插入排序方法
